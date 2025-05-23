@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DefendoDoge Scam Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    nav {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-around;
+      background-color: #1c1c1c;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    nav a {
+      color: #00ffd5;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 700px;
+      box-shadow: 0 0 25px rgba(0, 255, 213, 0.2);
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #00ffd5;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    h2 {
+      margin-top: 1.5rem;
+      color: #00ffd5;
+    }
+    p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 1rem;
+      background: #2a2a2a;
+      color: #ffffff;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background: linear-gradient(to right, #00ffd5, #00bfa5);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #00bfa5, #00ffd5);
+    }
+    #result {
+      margin-top: 2rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: left;
+    }
+    #result h3 {
+      color: #00ffd5;
+      margin-bottom: 1rem;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    #validationMessage {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .valid { color: #00ff00; }
+    .invalid { color: #ff0000; }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #00ffd5;
+      animation: spin 1s ease-in-out infinite;
+      margin-left: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" onclick="showPage('checker')">Home</a>
+    <a href="#" onclick="showPage('about')">About Tool</a>
+    <a href="#" onclick="showPage('token')">Token Info</a>
+    <a href="#" onclick="showPage('whitepaper')">White Paper</a>
+    <a href="#" onclick="showPage('contact')">Contact</a>
+  </nav>
+
+  <div id="checker" class="container page active">
+    <h1>DefendoDoge Scam Checker</h1>
+    
+    <select id="network" class="network-selector">
+      <option value="eth">Ethereum</option>
+      <option value="bsc">BNB Smart Chain</option>
+      <option value="solana">Solana</option>
+    </select>
+    
+    <input type="text" id="contractAddress" placeholder="Enter Smart Contract Address" oninput="validateAddress()" />
+    <p id="validationMessage"></p>
+
+    <button onclick="checkToken()" id="checkButton">
+      <span id="buttonText">Check</span>
+      <span id="loading" class="loading" style="display:none;"></span>
+    </button>
+    
+    <div id="result"></div>
+  </div>
+
+  <div id="about" class="container page">
+    <h1>About DefendoDoge Tool</h1>
+    <p>DefendoDoge is a cutting-edge scam detection tool that helps crypto users identify risky tokens. It integrates with GoPlus Labs API to scan smart contracts for red flags like high tax, upgradeable status, or minting capabilities.</p>
+    <p>We are committed to increasing transparency and helping protect users from fraudulent crypto projects by providing a fast, reliable, and easy-to-use scam analysis tool.</p>
+    <h2>How to Use the Tool:</h2>
+    <p>1. Copy the smart contract address of any ERC-20 token.</p>
+    <p>2. Paste it into the input field on the homepage.</p>
+    <p>3. Click "Check" and wait a few seconds.</p>
+    <p>4. The tool will show you a report with possible risks like high tax, upgradeability, or if the owner can mint or block trading.</p>
+    <p>Always double-check and do your own research before investing.</p>
+  </div>
+
+  <div id="token" class="container page">
+    <h1>DefendoDoge Token Info</h1>
+    <p><strong>Token Name:</strong> DefendoDoge</p>
+    <p><strong>Symbol:</strong> DFD</p>
+    <p><strong>Blockchain:</strong> Solana (SPL Token)</p>
+    <p><strong>Total Supply:</strong> 2,000,000,000 DFD</p>
+    <p><strong>Use Case:</strong> Utility token for premium scam detection access, governance voting, and community reward programs.</p>
+    <p><strong>Website:</strong> Coming Soon</p>
+    <p><strong>Whitepaper:</strong> Available Here</p>
+  </div>
+
+  <div id="whitepaper" class="container page">
+    <h1>DefendoDoge (DFD) - White Paper</h1>
+    <h2>1. Introduction</h2>
+    <p>DefendoDoge is a meme-powered security initiative built on the Solana blockchain. Our mission is to help crypto users protect themselves from fraudulent tokens and rug pulls by providing fast, user-friendly, and accessible scam analysis tools integrated into the decentralized ecosystem.</p>
+    <h2>2. Vision</h2>
+    <p>Our vision is to become the #1 meme-based crypto security project, empowering the community with knowledge and tools to safely explore decentralized finance (DeFi).</p>
+    <h2>3. Problem Statement</h2>
+    <p>The growing popularity of meme coins has unfortunately brought with it a surge in scams and malicious token contracts. Many investors fall victim due to a lack of transparency and accessible security insights.</p>
+    <h2>4. Our Solution</h2>
+    <p>DefendoDoge provides a web-based tool integrated with GoPlus Labs API to scan smart contracts in real-time. Users can simply paste a token address to receive an instant security report highlighting common risks:</p>
+    <ul>
+      <li>Upgradeability</li>
+      <li>Owner privileges (minting, blacklisting)</li>
+      <li>Honeypot behavior</li>
+      <li>Tax rates</li>
+    </ul>
+    <h2>5. Why Solana</h2>
+    <p>Originally planned for Ethereum, DefendoDoge migrated to Solana due to its speed, low transaction fees, and growing meme community. Solana allows faster and cheaper access to our tool, aligning with our mission of protecting everyday users.</p>
+    <h2>6. Tokenomics</h2>
+    <p><strong>Token Name:</strong> DefendoDoge</p>
+    <p><strong>Symbol:</strong> DFD</p>
+    <p><strong>Blockchain:</strong> Solana (SPL Token)</p>
+    <p><strong>Total Supply:</strong> 2,000,000,000 DFD</p>
+    <p><strong>Use Cases:</strong></p>
+    <ul>
+      <li>Access premium scam-checking features</li>
+      <li>Governance and voting on feature development</li>
+      <li>Rewards for community contributions</li>
+    </ul>
+    <h2>7. Roadmap</h2>
+    <p><strong>Q2 2025:</strong> Launch MVP of scam checker tool + Token release on Solana</p>
+    <p><strong>Q3 2025:</strong> Add multi-chain support (ETH, BSC)</p>
+    <p><strong>Q4 2025:</strong> Release mobile app + Community grant program</p>
+    <p><strong>Q1 2026:</strong> DAO integration + Premium analytics</p>
+    <h2>8. Community & Governance</h2>
+    <p>DFD holders will shape the future of DefendoDoge through decentralized governance, suggesting and voting on new features, supported chains, and funding proposals.</p>
+    <h2>9. Disclaimer</h2>
+    <p>This white paper is for informational purposes only and does not constitute financial advice. Cryptocurrency investments carry risk. Always DYOR (Do Your Own Research).</p>
+  </div>
+
+  <div id="contact" class="container page">
+    <h1>Contact Us</h1>
+    <form action="mailto:raimah8288@gmail.com" method="POST" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <script>
+    const API_CONFIG = {
+      eth: {
+        endpoint: 'https://api.gopluslabs.io/api/v1/token_security/eth',
+        pattern: /^(0x)?[0-9a-fA-F]{40}$/
+      },
+      bsc: {
+        endpoint: 'https://api.gopluslabs.io/api/v1/token_security/bsc',
+        pattern: /^(0x)?[0-9a-fA-F]{40}$/
+      },
+      solana: {
+        endpoint: 'https://api.gopluslabs.io/api/v1/solana/security',
+        pattern: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
+      }
+    };
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function validateAddress() {
+      const network = document.getElementById("network").value;
+      const address = document.getElementById("contractAddress").value.trim();
+      const validationMessage = document.getElementById("validationMessage");
+      
+      if (API_CONFIG[network].pattern.test(address)) {
+        validationMessage.textContent = "✓ Valid address format";
+        validationMessage.className = "valid";
+      } else if (address.length > 0) {
+        validationMessage.textContent = "✗ Invalid address format";
+        validationMessage.className = "invalid";
+      } else {
+        validationMessage.textContent = "";
+      }
+    }
+
+    async function checkToken() {
+      const address = document.getElementById("contractAddress").value.trim();
+      const network = document.getElementById("network").value;
+      const resultDiv = document.getElementById("result");
+      const checkButton = document.getElementById("checkButton");
+      const buttonText = document.getElementById("buttonText");
+      const loading = document.getElementById("loading");
+
+      // التحقق من العنوان
+      if (!address) {
+        resultDiv.innerHTML = "<p>Please enter a contract address.</p>";
+        return;
+      }
+
+      if (!API_CONFIG[network].pattern.test(address)) {
+        resultDiv.innerHTML = "<p>Invalid address format for selected network.</p>";
+        return;
+      }
+
+      // إظهار حالة التحميل
+      buttonText.textContent = "Checking";
+      loading.style.display = "inline-block";
+      checkButton.disabled = true;
+
+      try {
+        const apiUrl = network === 'solana' 
+          ? `${API_CONFIG[network].endpoint}?address=${address}`
+          : `${API_CONFIG[network].endpoint}?contract_address=${address}`;
+
+        const proxy = "https://corsproxy.io/?";
+        const response = await fetch(proxy + encodeURIComponent(apiUrl));
+        
+        if (!response.ok) {
+          throw new Error(`Network error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (!data.result) {
+          throw new Error("No data returned from API");
+        }
+
+        // عرض النتائج
+        resultDiv.innerHTML = formatResults(data.result, network);
+        
+      } catch (err) {
+        resultDiv.innerHTML = `
+          <div class="error-box">
+            <strong>Error:</strong> ${err.message}
+            <br>
+            <small>Please try again later or check the address</small>
+          </div>
+        `;
+      } finally {
+        buttonText.textContent = "Check";
+        loading.style.display = "none";
+        checkButton.disabled = false;
+      }
+    }
+
+    function formatResults(data, network) {
+      let html = `<h3>Security Analysis (${network.toUpperCase()})</h3>`;
+      
+      if (network === 'solana') {
+        html += `
+          <p><strong>Holder Count:</strong> ${data.holder_count || 'N/A'}</p>
+          <p><strong>Locked:</strong> ${data.is_locked ? '✅ Yes' : '❌ No'}</p>
+          <p><strong>Verified:</strong> ${data.is_verified ? '✅ Yes' : '❌ No'}</p>
+        `;
+      } else {
+        html += `
+          <p><strong>Token Name:</strong> ${data.token_name || 'N/A'}</p>
+          <p><strong>Honeypot Risk:</strong> ${data.is_honeypot === "1" ? '❌ High Risk' : '✅ Low Risk'}</p>
+          <p><strong>Buy Tax:</strong> ${data.buy_tax}%</p>
+          <p><strong>Sell Tax:</strong> ${data.sell_tax}%</p>
+          <p><strong>Upgradeable:</strong> ${data.is_proxy === "1" ? '⚠️ Yes (Risk)' : '✅ No'}</p>
+        `;
+      }
+      
+      return html;
+    }
+  </script>
+</body>
+</html>
